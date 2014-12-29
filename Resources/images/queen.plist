@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>queen1.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2,1179},{439,586}}</string>
+			<key>offset</key>
+			<string>{0,0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0,0},{439,586}}</string>
+			<key>sourceSize</key>
+			<string>{439,586}</string>
+		</dict>
+		<key>queen2.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2,591},{442,586}}</string>
+			<key>offset</key>
+			<string>{0,0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0,0},{442,586}}</string>
+			<key>sourceSize</key>
+			<string>{442,586}</string>
+		</dict>
+		<key>queen3.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{2,2},{443,587}}</string>
+			<key>offset</key>
+			<string>{0,0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0,0},{443,587}}</string>
+			<key>sourceSize</key>
+			<string>{443,587}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>realTextureFileName</key>
+		<string>queen.png</string>
+		<key>size</key>
+		<string>{447,1767}</string>
+		<key>smartupdate</key>
+		<string>$TexturePacker:SmartUpdate:ad5e9594b09690ef6a53148f593f3903:5c85ca24f6340765299f7769082e70d1:d9698f2d014841b1e5ef7c6ede3bb08f$</string>
+		<key>textureFileName</key>
+		<string>queen.png</string>
+	</dict>
+</dict>
+</plist>
