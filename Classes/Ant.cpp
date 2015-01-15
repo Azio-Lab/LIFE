@@ -8,13 +8,19 @@
 
 #include "Ant.h"
 #include "HelloWorldScene.h"
+#include "DatabaseHandler.h"
 
 USING_NS_CC;
 
-Ant::Ant()
+Ant::Ant(AntClass *antClass)
 {
+    mAntClass = new AntClass(antClass);
     // 1. load a default image
-    initWithSpriteFrameName("queen1.png");
+    ostringstream oss;
+    oss << mAntClass->getAntImageName() << 1 << ".png";
+    string antImageName = oss.str();
+    initWithSpriteFrameName(antImageName);
+    //initWithSpriteFrameName("queen1.png");
     
     this->setAnchorPoint(Vec2(0.5, 0));
     //this->setScale(0.5);
@@ -23,15 +29,30 @@ Ant::Ant()
     this->runAction(action());
     this->runAction(moving());
     
-    sqlite3 *antClass = NULL;
-    std::string path = FileUtils::sharedFileUtils()->getWritablePath()+"citybus.sqlite3";
     
-    std::string sql;
-    int result;
-    result = sqlite3_open(path.c_str(), &antClass);
-    if (result != SQLITE_OK) {
-        log("open database failed,  number%d",result);
-    }
+}
+
+Ant::Ant(int antClassId) {
+    mAntClass = new AntClass();
+    DatabaseHandler::getAntClassById(antClassId, mAntClass);
+    
+    // 1. load a default image
+    ostringstream oss;
+    oss << mAntClass->getAntImageName() << 1 << ".png";
+    string antImageName = oss.str();
+    initWithSpriteFrameName(antImageName);
+    //initWithSpriteFrameName("queen1.png");
+    
+    this->setAnchorPoint(Vec2(0.5, 0));
+    //this->setScale(0.5);
+    // 2. run the move action
+    //auto mySpawn = Spawn::createWithTwoActions(action(), moving());
+    this->runAction(action());
+    this->runAction(moving());
+}
+
+Ant::~Ant() {
+    delete mAntClass;
 }
 
 RepeatForever* Ant::action()
@@ -42,11 +63,11 @@ RepeatForever* Ant::action()
     cocos2d::Vector<cocos2d::SpriteFrame *> frames;
     SpriteFrameCache *frameCache = SpriteFrameCache::getInstance();
     
-    char file[100] = {0};
-    
     for (int i = 0; i < numFrame; i++) {
-        sprintf(file, "queen%1d.png", i+1);
-        SpriteFrame *frame = frameCache->getSpriteFrameByName(file);
+        ostringstream oss;
+        oss << mAntClass->getAntImageName() << i+1 << ".png";
+        string antImageName = oss.str();
+        SpriteFrame *frame = frameCache->getSpriteFrameByName(oss.str());
         frames.pushBack(frame);
     }
     

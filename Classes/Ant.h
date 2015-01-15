@@ -10,7 +10,7 @@
 #define __Life__Ant__
 
 #include "cocos2d.h"
-#include "sqlite3.h"
+#include "AntClass.h"
 #include <string>
 using namespace cocos2d;
 using namespace std;
@@ -18,9 +18,14 @@ using namespace std;
 class Ant : public Sprite
 {
 public:
-    Ant();
+    Ant(AntClass *antClass);
+    Ant(int antClassId);
+    ~Ant();
+    
     
 private:
+    AntClass *mAntClass;
+    /*
     int id;
     string name;
     string description;
@@ -30,7 +35,7 @@ private:
     float rarity;
     int price;
     string material;
-    
+    */
     RepeatForever *moving();
     RepeatForever *action();
 };

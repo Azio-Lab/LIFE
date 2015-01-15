@@ -74,20 +74,59 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);
     
-    Ant *ant = new Ant();
+    
+    
+    Ant *ant = new Ant(1);
+    
     ant->setPosition(Point(ant->getContentSize().width / 2, 0));
     this->addChild(ant);
     
     
     auto size = Director::getInstance()->getVisibleSize();
     
+    float nestHeight = size.height;
+    float scale = size.width/(float)1242;
+    
     auto *pScrollView = ScrollView::create(size);
+    pScrollView->setBounceable(false);
     this->addChild(pScrollView);
     
+    auto *topSprite = Sprite::create("01_bg-taiwan/bg_home_1.png");
+    topSprite->setScale(scale, scale);
+    auto topSize = topSprite->getBoundingBox().size;
+    
+    for(int i=0; i<5; i++) {
+        ostringstream oss;
+        oss << "01_bg-taiwan/bg_home_" << i+1 << ".png";
+        string bgHomeName = oss.str();
+        
+        auto *sprite = Sprite::create(bgHomeName);
+        sprite->setScale(scale, scale);
+        sprite->setPosition(Vec2(sprite->getBoundingBox().size.width/2, nestHeight-sprite->getBoundingBox().size.height/2)+Vec2(sprite->getBoundingBox().size.width*i, 0));
+        pScrollView->addChild(sprite);
+    }
+    
+    auto *bottomSprite = Sprite::create("01_bg-taiwan/bg_dirt.png");
+    bottomSprite->setScale(scale, scale);
+    auto bottomSize = bottomSprite->getBoundingBox().size;
+    
+    for(int i=0; i<5; i++) {
+        string bgDirtName = "01_bg-taiwan/bg_dirt.png";
+        
+        auto *sprite = Sprite::create(bgDirtName);
+        sprite->setScale(scale, scale);
+        sprite->setPosition(Vec2(sprite->getBoundingBox().size.width/2, nestHeight-topSize.height-sprite->getBoundingBox().size.height/2)+Vec2(sprite->getBoundingBox().size.width*i, 0));
+        pScrollView->addChild(sprite);
+    }
+    //this->addChild(node);
     //スクロールビューに入れるスプライトを用意
-    auto *pSprite = Sprite::create("HelloWorld.png");
-    pScrollView->setContainer(pSprite);
-    pScrollView->setContentSize(pSprite->getContentSize());
+    auto *pSprite = Sprite::create("01_bg-taiwan/bg_home_1.png");
+    pSprite->setScale(scale, scale);
+    //node->setContentSize(Size(pSprite->getBoundingBox().size.width*5, pSprite->getBoundingBox().size.height));
+    //pScrollView->setAnchorPoint(Vec2(0.0, 0.0));
+    //pScrollView->addChild(node);
+    //pScrollView->setContainer(node);
+    pScrollView->setContentSize(Size(pSprite->getBoundingBox().size.width*5, nestHeight));
     
     return true;
 }
