@@ -21,7 +21,7 @@ public:
              char* material, int skill);
     AntClass(AntClass const *antClass);
     //AntClass(int antClassId);
-    AntClass();
+    //AntClass();
     ~AntClass();
     int getAntId();
     string getName();

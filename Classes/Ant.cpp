@@ -19,36 +19,60 @@ Ant::Ant(AntClass *antClass)
     ostringstream oss;
     oss << mAntClass->getAntImageName() << 1 << ".png";
     string antImageName = oss.str();
-    initWithSpriteFrameName(antImageName);
-    //initWithSpriteFrameName("queen1.png");
+    //initWithSpriteFrameName(antImageName);
+    initWithSpriteFrameName("queen1.png");
     
     this->setAnchorPoint(Vec2(0.5, 0));
     //this->setScale(0.5);
     // 2. run the move action
     //auto mySpawn = Spawn::createWithTwoActions(action(), moving());
-    this->runAction(action());
-    this->runAction(moving());
+    //this->runAction(action());
+    //this->runAction(moving());
     
     
 }
 
 Ant::Ant(int antClassId) {
-    mAntClass = new AntClass();
-    DatabaseHandler::getAntClassById(antClassId, mAntClass);
+    //Ant(DatabaseHandler::getAntClassById(antClassId));
     
-    // 1. load a default image
-    ostringstream oss;
-    oss << mAntClass->getAntImageName() << 1 << ".png";
-    string antImageName = oss.str();
-    initWithSpriteFrameName(antImageName);
-    //initWithSpriteFrameName("queen1.png");
+    sqlite3 *lifeDB = NULL;
     
-    this->setAnchorPoint(Vec2(0.5, 0));
-    //this->setScale(0.5);
-    // 2. run the move action
-    //auto mySpawn = Spawn::createWithTwoActions(action(), moving());
-    this->runAction(action());
-    this->runAction(moving());
+    std::string dbPath  = cocos2d::FileUtils::getInstance()->fullPathForFilename("life.sqlite3");
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    dbPath  = CCFileUtils::sharedFileUtils()->getWritablePath();
+    dbPath  += "life.sqlite3";
+    
+    FILE* file = fopen(dbPath.c_str(), "r");
+    if (file == nullptr)
+    {
+        long size;
+        const char* data = (char*) cocos2d::FileUtils::getInstance()->getFileData("life.sqlite3", "rb", &size);
+        file = fopen(dbPath.c_str(), "wb");
+        fwrite(data, size, 1, file);
+        CC_SAFE_DELETE_ARRAY(data);
+    }
+    fclose(file);
+#endif
+    
+    sqlite3_open(dbPath.c_str(), &lifeDB);
+    
+    char **re;
+    char *err;
+    int r,c;
+    
+    char *sql;
+    sprintf(sql, "SELECT * FROM antClass WHERE antClassId = %d", antClassId);
+    //ostringstream oss;
+    //oss << "SELECT * FROM antClass WHERE antClassId = " << antClassId << ".png";
+    //string antImageName = oss.str();
+    
+    sqlite3_get_table(lifeDB, sql,&re,&r,&c,&err);
+    AntClass* antClass = new AntClass(atoi(*(re+c)), re[c+1], *(re+c+2), re[c+3], re[c+4], atof(re[c+5]), atof(re[c+6]), atoi(re[c+7]), re[c+8], atoi(re[c+9]));
+    sqlite3_free_table(re);
+    sqlite3_close(lifeDB);
+    
+    Ant(antClass);
 }
 
 Ant::~Ant() {

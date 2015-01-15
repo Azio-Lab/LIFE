@@ -15,7 +15,7 @@
 
 class DatabaseHandler {
 public:
-    static char** getAntClassById(int antClassId, AntClass* antClass);
+    static AntClass* getAntClassById(int antClassId);
 //private:
     static sqlite3* open();
 };

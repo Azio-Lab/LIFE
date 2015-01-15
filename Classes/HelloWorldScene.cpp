@@ -64,7 +64,7 @@ bool HelloWorld::init()
 
     // add the label as a child to this layer
     this->addChild(label, 1);
-
+    
     // add "HelloWorld" splash screen"
     auto sprite = Sprite::create("HelloWorld.png");
 
@@ -74,14 +74,7 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);
     
-    
-    
-    Ant *ant = new Ant(1);
-    
-    ant->setPosition(Point(ant->getContentSize().width / 2, 0));
-    this->addChild(ant);
-    
-    
+    /*
     auto size = Director::getInstance()->getVisibleSize();
     
     float nestHeight = size.height;
@@ -127,6 +120,10 @@ bool HelloWorld::init()
     //pScrollView->addChild(node);
     //pScrollView->setContainer(node);
     pScrollView->setContentSize(Size(pSprite->getBoundingBox().size.width*5, nestHeight));
+    */
+    Ant *ant = new Ant(1);
+    ant->setPosition(Point(ant->getContentSize().width / 2, 0));
+    this->addChild(ant);
     
     return true;
 }

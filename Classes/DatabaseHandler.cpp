@@ -37,7 +37,7 @@ sqlite3* DatabaseHandler::open() {
     return NULL;
 }
 
-char** DatabaseHandler::getAntClassById(int antClassId, AntClass* antClass)
+AntClass* DatabaseHandler::getAntClassById(int antClassId)
 {
     sqlite3* lifeDB = DatabaseHandler::open();
     if (lifeDB == NULL) {
@@ -56,9 +56,9 @@ char** DatabaseHandler::getAntClassById(int antClassId, AntClass* antClass)
     //string antImageName = oss.str();
     
     sqlite3_get_table(lifeDB, sql,&re,&r,&c,&err);
-    antClass = new AntClass(atoi(*(re+c)), re[c+1], *(re+c+2), re[c+3], re[c+4], atof(re[c+5]), atof(re[c+6]), atoi(re[c+7]), re[c+8], atoi(re[c+9]));
+    AntClass* antClass = new AntClass(atoi(*(re+c)), re[c+1], *(re+c+2), re[c+3], re[c+4], atof(re[c+5]), atof(re[c+6]), atoi(re[c+7]), re[c+8], atoi(re[c+9]));
     sqlite3_free_table(re);
     sqlite3_close(lifeDB);
     
-    return re;
+    return antClass;
 }

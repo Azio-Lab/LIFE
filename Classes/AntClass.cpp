@@ -53,7 +53,7 @@ AntClass::AntClass(int antClassId)
     mMaterial.assign(*(antClassData+8));
     mSkill = atof(*(antClassData+9));
 }
-*/
+
 AntClass::AntClass()
 {
     mAntId = -1;
@@ -67,7 +67,7 @@ AntClass::AntClass()
     mMaterial.assign("");
     mSkill = 0;
 }
-
+*/
 AntClass::~AntClass() {
 }
 
