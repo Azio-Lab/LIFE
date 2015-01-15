@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+*.xcuserstate
+
+*.xcscheme
+
+*.plist
